@@ -1,5 +1,5 @@
 
-# WirelessRoad GW-IMX6ULL
+# WirelessRoad GW-IMX6ULL OPENWRT
 
 [Детальное описание собранной прошивки](README.details.md)
 
