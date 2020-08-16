@@ -1,66 +1,67 @@
 
 # WirelessRoad GW-IMX6ULL OPENWRT
 
-[Детальное описание собранной прошивки](README.details.md)
+[收集的固件详细说明](README.details.md)
 
-### Порядок сборки прошивки.
-**1.** Установите ситемные утилиты сборки для вашего дистрибутива. Для Ubuntu в консоли выполните команды:
+###固件装配程序
+
+*安装您的分布软件包。为Ubuntu控制台执行命令：
 > sudo apt-get update
 
 > sudo apt-get install git-core build-essential libssl-dev libncurses5-dev unzip gawk zlib1g-dev subversion mercurial
 
-**2.** Клонируйте репозиторий исходных текстов командой:
+**2.** 使用命令克隆源库:
 
 > git clone https://github.com/wireless-road/lorawan-imx6ull
 
-**3.** Перейдите в директорию c исходными текстами:
+**3.** 进入源目录:
 
 > cd lorawan-imx6ull
 
-**4.** Установите для возможности выбора все доступные пакеты командами:
+**4.** 选择所有可用的命令包:
 > ./scripts/feeds update -a
 
 > ./scripts/feeds install -a
 
-**5.** Скопируйте конфигурационный файл openwrt для устройства GW-IMX6ULL:
+**5.** 复制设备的openwrt配置文件 GW-IMX6ULL:
 
 > cp openwrt-configs/gw-imx6ull ./.config
 
-**6.** _Этот шаг можно пропустить, если вам не нужны дополнительные опции_
+**6.**这个步骤可以跳过，如果你不需要额外的选项。
 
-  Для тонкой настройки выполните команду:
+为精细配置，请执行命令：
 > make menuconfig
 
-**7.** Предварительно загрузите все необходимые исходные тексты пакетов командой:
+**7.**预先下载所有必要的源代码包的命令:
 > make download
 
-**8.** Выберите один из вариантов, приведённых ниже, и запустите процесс сборки командой:
+**8.** 选择下面的一个选项，并开始一个安装程序的命令:
 
 > make
 
-или командой с указанием количества параллельных процессов для меньшего времени сборки, в примере указано 4 параллельных процесса:
+使用4线程编译:
 
 > make -j 4
 
-**9.** После завершения сборки в директории `bin/targets/imx6ull/cortexa7/` будут находится образы прошивки и загрузчика для записи/обновления:
+**9.**当你完成了你的安装程序，在目录中的bin/targets/imx6ull/cortexa7/“”将有固件和启动图像写入/更新：
 
-`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.sdcard.bin` - образ для записи на SD/MMC-карту.
+`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.sdcard.bin` - SD/MMC-映像.
 
-`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.mtd-sysupgrade.bin` - образ прошивки для использования на spi-flash, этот файл используется для удалённого обновления.
+`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.mtd-sysupgrade.bin` - 固件图像用于spi-flash，该文件用于远程更新。
 
-`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.mtd-factory.bin` - образ spi-flash для записи при производстве или полного обновления прошивки и загрузчика один файлом.
+`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.mtd-factory.bin` - spi-flash图像记录在一个单一的文件生产或完全更新固件和启动程序。
 
-`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.u-boot.bin` - образ загрузчика.
+`openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.u-boot.bin` - uboot启动映像.
 
 
-### Обновление и запись образа.
+### 更新和写入图像。
 
-##### Первичная запись.
+原始记录
 
-Для использования прошивки необходимо записать образ на внешний накопитель (SD-карта) командой
+使用固件，您必须将图像写入外部存储器）（SD卡）命令
 > dd if=openwrt-imx6ull-cortexa7-wirelessroad_gw-imx6ull-squashfs.sdcard.bin of=/dev/sdX
 
-Вместо /dev/sdX укажите путь к устройству с SD-картой.
+而不是/dev sdx指定一个路径的SD卡设备。
 
 После этого необходимо загрузить устройство с openwrt на SD-карте. Далее скачиваем файл прошивки для SPI-NOR (MTD) на устройство. Для этого можно воспользоваться FTP- или HTTP-сервером на локальном компьютере, или воспользоваться SCP-протоколом.
 
